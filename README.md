@@ -1,8 +1,10 @@
-# auto-MBW-rt extension by 6DammK9 (1.8.0 Tested)
+# auto-MBW-rt extension by 6DammK9 (1.10.1 Tested)
 
 - *Only tested in Winodws a.k.a my machine.* I'm not [gradio](https://www.gradio.app/) / [webUI](https://github.com/AUTOMATIC1111/stable-diffusion-webui) expert therefore do not expect any auto / e2e solutions. Also I do not gruntee to have any decent test coverage. 
 
 - Currently SD1, SD2 and SDXL are tested. *You cannot merge different UNET architecture. Check out model versions first.*
+
+- **No, it have no chance to support SD3 / AuraFlow / Flux.** This will be V3 and requires revamp the [nasty block prefixes](https://github.com/6DammK9/sd-webui-runtime-block-merge/blob/master/scripts/runtime_block_merge.py#L25) here, and the ["UI" that I never use it](https://github.com/6DammK9/sd-webui-runtime-block-merge/blob/master/scripts/runtime_block_merge.py#L524). [I'd do it if someone are willing to manage 50+ layers](https://github.com/6DammK9/nai-anime-pure-negative-prompt/tree/main/ch03#extra-model-comparasion-in-size-and-mbw-layers)
 
 - You will see loads of `Missing key(s) in state_dict:` when the settings in A1111 is not correcly loaded. Keep switching *UI's selected model* to non SDXL models, and try again. If you see a `*.yaml` is loaded, it is usually success. Sadly it is done in A1111 instead of extensions.
 
@@ -45,6 +47,8 @@
 4. From [AutoMBW V1](https://github.com/Xerxemi/sdweb-auto-MBW), make sure your WebUI instance has API enabled as `--api` in `COMMANDLINE_ARGS`.
 
 ```bat
+REM IF you have multiple Pythons installed, set this.
+set PYTHON=C:\Users\User\AppData\Local\Programs\Python\Python310\python.exe
 REM 2nd SD (7861) for 2nd GPU (1)
 set COMMANDLINE_ARGS=--medvram --disable-safe-unpickle --deepdanbooru --xformers --no-half-vae --api --port=7861 --device-id=1
 ```
@@ -63,6 +67,8 @@ set COMMANDLINE_ARGS=--medvram --disable-safe-unpickle --deepdanbooru --xformers
 ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
 gradio 3.41.2 requires huggingface-hub>=0.14.0, but you have huggingface-hub 0.13.4 which is incompatible.
 ```
+
+- (240730) If you experience `ImportError: cannot import name 'xxx'`, checkout [this sourcecode](https://github.com/6DammK9/auto-MBW-rt/blob/master/install.py) again and explictly `pip install xxx`. *I'm not sure how long it stays compatable with A1111. Freeze A1111 or just seek other mergers.*
 
 ## Basic procedure
 
@@ -86,7 +92,7 @@ gradio 3.41.2 requires huggingface-hub>=0.14.0, but you have huggingface-hub 0.1
 
 ## If you encounter errors
 
-- Trust me. **Always reboot webUI first.** State control in WebUI (even python) is awful.
+- Trust me. **Always reboot webUI first. Head straight into merging without any operation.** State control in WebUI (even Python) is awful.
 
 ### Encountered errors that I cannot solve (limitation)
 
